@@ -1,1 +1,1 @@
-Backend for the "Studio Supply" app. Made with Express in connection to MongoDB
+Backend for the Album Collection app. Made with Express in connection to MongoDB
