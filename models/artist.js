@@ -25,7 +25,7 @@ ArtistSchema.virtual("name").get(function() {
     return fullname
 })
 
-ArtistSchena.virtual('url').get(function() {
+ArtistSchema.virtual('url').get(function() {
     return `/catalog/artist/${this._id}`
 })
 

@@ -55,7 +55,7 @@ async function artistCreate(index, first_name, last_name, d_date) {
 }
 
 async function albumCreate(index, title, summary, artist, price, quantity, release_date, genre, cover_art) {
-  const artistdetail = {
+  const albumdetail = {
     title: title,
     summary: summary,
     artist: artist,
@@ -64,7 +64,7 @@ async function albumCreate(index, title, summary, artist, price, quantity, relea
     release_date: release_date,
     cover_art: cover_art,
   };
-  if (genre != false) artistdetail.genre = genre;
+  if (genre != false) albumdetail.genre = genre;
 
   const album = new Album(albumdetail);
   await album.save();

@@ -14,11 +14,11 @@ const AlbumSchema = new Schema({
     cover_art: {type: String, required: true},
 })
 
-AblumSchema.virtual('url').get(function() {
+AlbumSchema.virtual('url').get(function() {
     return `/catalog/album/${this._id}`
 })
 
-AblumSchema.virtual('release_date_formatted').get(function(){
+AlbumSchema.virtual('release_date_formatted').get(function(){
     return this.release_date ? DateTime.fromJSDate(this.release_date).toLocaleString(DateTime.DATE_MED): '';
 })
 
