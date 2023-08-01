@@ -14,7 +14,7 @@ router.post('/artist/create')
         /*ALBUMS*/
 
 //Create Album
-router.get('/album/create')
+router.get('/album/create', album_controller.album_create_get)
 router.post('/album/create')
 
 //Read singular album details
