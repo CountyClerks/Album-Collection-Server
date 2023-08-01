@@ -34,3 +34,18 @@ exports.album_list = asyncHandler(async (req, res, next) => {
         .exec()
     res.render("album_list", {title: "Album List", album_list: allAlbums})
 })
+
+exports.album_detail = asyncHandler(async (req, res, next) => {
+    const album = await Album.findById(req.params.id).populate("artist").populate("genre").exec()
+
+    if (album === null) {
+        const err = new Error("Album not found")
+        err.status = 404
+        return next(err)
+    }
+
+    res.render("album_detail", {
+        title: album.title,
+        album: album,
+    })
+})
