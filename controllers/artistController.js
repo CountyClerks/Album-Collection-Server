@@ -106,7 +106,22 @@ exports.artist_delete_get = asyncHandler(async (req, res, next) => {
 })
 
 exports.artist_delete_post = asyncHandler(async (req, res, next) => {
-
+    const [ artist, allAlbumsByArtist] = await Promise.all([
+        Artist.findById(req.params.id).exec(),
+        Albums.find({ artist: req.params.id}, "title description").exec()
+    ])
+    //We dont want to delete an artist's profile if they still have albums in our collection.
+    if (allAlbumsByArtist.length > 0) {
+        res.render("artist_delete", {
+            title: "Delete Artist",
+            artist: artist,
+            artist_albums: allAlbumsByArtist,
+        })
+        return
+    } else {
+        await Artist.findByIdAndRemove(req.body.artistid)
+        res.redirect("/catalog/artists")
+    }
 })
 
 exports.artist_update_get = asyncHandler(async (req, res, next) => {
