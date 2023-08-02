@@ -43,6 +43,49 @@ exports.artist_create_get = (req, res, next) => {
 }
 
 exports.artist_create_post = [
+    body("first_name")
+        .trim()
+        .isLength({ min: 1 })
+        .escape()
+        .withMessage("First name must be specified.")
+        .isAlphanumeric()
+        .withMessage("First name has non-alphanumeric characters."),
+    body("family_name")
+        .trim()
+        .isLength({ min: 1 })
+        .escape()
+        .withMessage("Last name must be specified.")
+        .isAlphanumeric()
+        .withMessage("Last name has non-alphanumeric characters."),
+    body("debut_date", "Invalid date of debut")
+        .optional({ values: "falsy" })
+        .isISO8601()
+        .toDate(),
+    
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req)
+
+        //Create Artist object with trimmed data.
+        const artist = new Artist({
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            debut_date: req.body.debut_date
+        })
+
+        if (!errors.isEmpty()) {
+            //There are errors.
+            res.render("artist_form", {
+                title: "Create Artist",
+                artist: artist,
+                errors: errors.array()
+            })
+            return
+        } else {
+            await artist.save()
+
+            res.redirect(artist.url)
+        }
+    })
 
 ]
 
