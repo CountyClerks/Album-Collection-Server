@@ -86,11 +86,23 @@ exports.artist_create_post = [
             res.redirect(artist.url)
         }
     })
-
 ]
 
 exports.artist_delete_get = asyncHandler(async (req, res, next) => {
+    const [artist, allAlbumsByArtist] = await Promise.all([
+        Artist.findById(req.params.id).exec(),
+        Album.find({ artist: req.params.id}, "title description").exec()
+    ])
 
+    if (artist === null) {
+        res.redirect("/catalog/artists")
+    }
+
+    res.render("artist_delete", {
+        title: "Delete Artist",
+        artist: artist,
+        artist_albums: allAlbumsByArtist
+    })
 })
 
 exports.artist_delete_post = asyncHandler(async (req, res, next) => {
