@@ -50,14 +50,9 @@ exports.artist_create_post = [
         .withMessage("First name must be specified.")
         .isAlphanumeric()
         .withMessage("First name has non-alphanumeric characters."),
-    body("family_name")
-        .trim()
-        .isLength({ min: 1 })
-        .escape()
-        .withMessage("Last name must be specified.")
-        .isAlphanumeric()
-        .withMessage("Last name has non-alphanumeric characters."),
-    body("debut_date", "Invalid date of debut")
+    body("last_name")
+        .optional({ checkFalsy: true }),
+    body("debut_date", "Invalid debut date")
         .optional({ values: "falsy" })
         .isISO8601()
         .toDate(),
@@ -125,9 +120,53 @@ exports.artist_delete_post = asyncHandler(async (req, res, next) => {
 })
 
 exports.artist_update_get = asyncHandler(async (req, res, next) => {
+    const artist = await Artist.findById(req.params.id).exec()
 
+    if(artist === null) {
+        const err = new Error("Artist not found.")
+        err.status = 404
+        return next(err)
+    }
+
+    res.render("artist_form", {
+        title: "Update Artist",
+        artist: artist,
+    })
 })
 
 exports.artist_update_post = asyncHandler(async (req, res, next) => {
+    body("first_name")
+        .trim()
+        .isLength({ min: 1 })
+        .escape()
+        .withMessage("First name must be specified.")
+        .isAlphanumeric()
+        .withMessage("First name has non-alphanumeric characters."),
+    body("last_name")
+    .optional({ checkFalsy: true }),
+    body("debut_date", "Invalid debut date")
+        .optional({ values: "falsy" })
+        .isISO8601()
+        .toDate(),
 
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req)
+
+        const artist = new Artist({
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            debut_date: req.body.debut_date
+        })
+
+        if (!errors.isEmpty()) {
+            res.render("artist_form", {
+                title: "Update Artist",
+                artist: artist,
+                errors: errors.array()
+            })
+        } else {
+            await Artist.findByIdAndUpdate(req.params.id, artist)
+            res.redirect(artist.url)
+        }
+    })
 })
