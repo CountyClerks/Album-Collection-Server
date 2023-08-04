@@ -19,7 +19,7 @@ exports.genre_detail = asyncHandler(async (req, res, next) => {
     // Get details of genre and all associated albums
     const [genre, albumsInGenre] = await Promise.all([
       Genre.findById(req.params.id).exec(),
-      Album.find({ genre: req.params.id }, "title description").exec(),
+      Album.find({ genre: req.params.id }, "title summary").exec(),
     ]);
     if (genre === null) {
       // No results.
@@ -81,7 +81,7 @@ exports.genre_create_post = [
 exports.genre_delete_get = asyncHandler(async (req, res, next) => {
     const [genre, albumsInGenre] = await Promise.all([
       Genre.findById(req.params.id).exec(),
-      Album.find({ genre: req.params.id }, "title description").exec(),
+      Album.find({ genre: req.params.id }, "title summary").exec(),
     ])
   
     if(genre === null) {
@@ -98,7 +98,7 @@ exports.genre_delete_get = asyncHandler(async (req, res, next) => {
 exports.genre_delete_post = asyncHandler(async (req, res, next) => {
     const [genre, albumsInGenre] = await Promise.all([
       Genre.findById(req.params.id).exec(),
-      Album.find({ genre: req.params.id}, "title description").exec(),
+      Album.find({ genre: req.params.id}, "title summary").exec(),
     ])
   
     if (albumsInGenre.length > 0) {

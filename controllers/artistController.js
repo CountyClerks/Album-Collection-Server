@@ -8,7 +8,7 @@ const { body, validationResult } = require('express-validator')
 //Display list of all Artists.
 exports.artist_list = asyncHandler(async (req, res, next) => {
 
-    const allArtists = await Artist.find().sort({last_name: 1}).exec()
+    const allArtists = await Artist.find().sort({first_name: 1}).exec()
 
     res.render("artist_list", {
         title: "Artist List",
@@ -21,7 +21,7 @@ exports.artist_detail = asyncHandler(async (req, res, next) => {
 
     const [artist, allAlbumsByArtist] = await Promise.all([
         Artist.findById(req.params.id).exec(),
-        Album.find({ artist: req.params.id }, "title description").exec(),
+        Album.find({ artist: req.params.id }, "title summary").exec(),
     ])
     //Throw error if no artist exist
     if (artist === null) {
@@ -86,7 +86,7 @@ exports.artist_create_post = [
 exports.artist_delete_get = asyncHandler(async (req, res, next) => {
     const [artist, allAlbumsByArtist] = await Promise.all([
         Artist.findById(req.params.id).exec(),
-        Album.find({ artist: req.params.id}, "title description").exec()
+        Album.find({ artist: req.params.id}, "title summary").exec()
     ])
 
     if (artist === null) {
@@ -103,7 +103,7 @@ exports.artist_delete_get = asyncHandler(async (req, res, next) => {
 exports.artist_delete_post = asyncHandler(async (req, res, next) => {
     const [ artist, allAlbumsByArtist] = await Promise.all([
         Artist.findById(req.params.id).exec(),
-        Albums.find({ artist: req.params.id}, "title description").exec()
+        Albums.find({ artist: req.params.id}, "title summary").exec()
     ])
     //We dont want to delete an artist's profile if they still have albums in our collection.
     if (allAlbumsByArtist.length > 0) {
@@ -143,7 +143,7 @@ exports.artist_update_post = asyncHandler(async (req, res, next) => {
         .isAlphanumeric()
         .withMessage("First name has non-alphanumeric characters."),
     body("last_name")
-    .optional({ checkFalsy: true }),
+    .optional({ values: "falsy" }),
     body("debut_date", "Invalid debut date")
         .optional({ values: "falsy" })
         .isISO8601()

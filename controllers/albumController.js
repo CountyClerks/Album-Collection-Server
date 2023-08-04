@@ -59,7 +59,7 @@ exports.album_create_get = asyncHandler(async (req, res, next) => {
     ])
 
     res.render("album_form", {
-        title: "Create Book",
+        title: "Create Album",
         artist: allArtists,
         genres: allGenres,
     })
@@ -83,7 +83,7 @@ exports.album_create_post = [
         .trim()
         .isLength({ min: 1 })
         .escape(),
-    body("description", "Description must not be empty")
+    body("summary", "Summary must not be empty")
         .trim()
         .isLength({ min: 1 })
         .escape(),
@@ -111,7 +111,7 @@ exports.album_create_post = [
         const album = new Album({
             title: req.body.title,
             artist: req.body.artist,
-            description: req.body.description,
+            summary: req.body.summary,
             price: req.body.price,
             quantity: req.body.quantity,
             release_date: req.body.release_date,
@@ -175,7 +175,7 @@ exports.album_update_get = asyncHandler(async (req, res, next) => {
         Genre.find().exec(),
     ])
 
-    if (book === null) {
+    if (album === null) {
         const err = new Error("Album not found")
         err.status = 404
         return next(err)
@@ -218,7 +218,7 @@ exports.album_update_post = [
         .trim()
         .isLength({ min: 1 })
         .escape(),
-    body("description", "Description must not be empty")
+    body("summary", "Summary must not be empty")
         .trim()
         .isLength({ min: 1 })
         .escape(),
@@ -248,7 +248,7 @@ exports.album_update_post = [
         const album = new Album({
             title: req.body.title,
             artist: req.body.artist,
-            description: req.body.description,
+            summary: req.body.summary,
             price: req.body.price,
             quantity: req.body.quantity,
             release_date: req.body.release_date,
@@ -272,7 +272,7 @@ exports.album_update_post = [
                 }
             }
             res.render("album_form", {
-                title: "Update Book",
+                title: "Update Album",
                 artists: allArtists,
                 genres: allGenres,
                 album: album,
@@ -281,7 +281,7 @@ exports.album_update_post = [
             return;
         } else {
             //If data form is valid, update record.
-            const thealbum = await Book.findByIdAndUpdate(req.params.id, album, {})
+            const thealbum = await Album.findByIdAndUpdate(req.params.id, album, {})
 
             //Redirect to album details page
             res.redirect(thealbum.url)
