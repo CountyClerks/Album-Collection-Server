@@ -6,7 +6,7 @@ const { body, validationResult } = require('express-validator')
 
 //Display all genres.
 exports.genre_list = asyncHandler(async (req, res, next) => {
-    const allGenres = await  Genre.find().sort({ genre_name: 1}).exec();
+    const allGenres = await Genre.find().sort({ genre_name: 1}).exec();
 
     res.render("genre_list", {
       title: "Genre List",
