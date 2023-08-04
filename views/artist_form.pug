@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1=title
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='first_name') First Name:
+      input#first_name.form-control(type='text' placeholder='First name' name='first_name' required='true' value=(undefined===author ? '' : artist.first_name) )
+      label(for='last_name') Last Name:
+      input#last_name.form-control(type='text' placeholder='Last name' name='Last_name' required='false' value=(undefined===author ? '' : artist.last_name))
+    div.form-group
+      label(for='date_of_birth') Debut Date:
+      input#debut_date.form-control(type='date' name='debut_date' value=(undefined===artist ? '' : artist.debut_date) )
+  if errors
+    ul
+      for error in errors
+        li!= error.msg
