@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    h1= title 
+    p Welcome to #[em Album Collection], a basic website to keep track of your album collection!
+
+    h1 Dynamic content 
+    p The collection has the following record counts: 
+
+    ul 
+        li #[strong Albums:] !{album_count}
+        li #[strong Artists:] !{artist_count}
+        li #[strong Genres:] !{genre_count}

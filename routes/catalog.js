@@ -47,6 +47,7 @@ router.get('/album/:id/delete', album_controller.album_delete_get)
 router.post('/album/:id/delete', album_controller.album_delete_post)
 
                 /*GENRE*/
+
 //Create Genre
 router.get('/genre/create', genre_controller.genre_create_get)
 router.post('/genre/create', genre_controller.genre_create_post)
