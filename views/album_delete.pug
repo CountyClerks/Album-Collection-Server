@@ -1,0 +1,22 @@
+extends layout
+
+block content
+
+  h1 #{title}: #{album.title}
+
+  p #[strong Author:]
+    a(href=album.artist.url) #{album.artist.name}
+  p #[strong Description:] #{album.description}
+  p #[strong Genre:]
+    each val in album.genre
+      a(href=val.url) #{val.name}
+      |,
+
+  hr
+    p Do you really want to delete this Album?
+
+    form(method='POST' action='')
+      div.form-group
+        input#id.form-control(type='hidden',name='id', required='true', value=album._id )
+
+      button.btn.btn-primary(type='submit') Delete
