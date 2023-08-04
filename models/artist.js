@@ -12,16 +12,13 @@ const ArtistSchema = new Schema({
 ArtistSchema.virtual("name").get(function() {
     //Return an empty string if the artist does not have a first or last name
     //If first & last name exist, return both
-    let fullname = "";
+    let fullname = '';
 
     if (this.first_name && this.last_name) {
-        fullname = `${this.first_name}, ${this.last_name}`
-    } else if (this.first_name) {
+        fullname = `${this.first_name} ${this.last_name}`
+    } else {
         fullname = `${this.first_name}`
-    }else if (this.last_name) {
-        fullname = `${this.last_name}`
     }
-
     return fullname
 })
 

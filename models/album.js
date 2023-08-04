@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 
 const AlbumSchema = new Schema({
     title: {type: String, required: true},
-    description: {type: String, required: true},
+    summary: {type: String, required: true},
     artist: {type: Schema.Types.ObjectId, ref: 'Artist', required: true},
     price: {type: Number, required: true},
     quantity: {type: Number, required: true},
