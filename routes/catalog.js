@@ -4,7 +4,6 @@ const router = express.Router()
 const artist_controller = require('../controllers/artistController')
 const album_controller = require('../controllers/albumController')
 const genre_controller = require('../controllers/genreController')
-const artist = require('../models/artist')
 
 //Home page
 router.get('/', album_controller.index)
