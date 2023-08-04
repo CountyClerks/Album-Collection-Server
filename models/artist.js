@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const ArtistSchema = new Schema({
     first_name: {type: String, required: true, maxLength: 100},
     last_name: {type: String, required: false, maxLength: 100},
-    d_date: {type: Date}
+    debut_date: {type: Date}
 })
 
 ArtistSchema.virtual("name").get(function() {
