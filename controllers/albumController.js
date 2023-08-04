@@ -60,7 +60,7 @@ exports.album_create_get = asyncHandler(async (req, res, next) => {
 
     res.render("album_form", {
         title: "Create Album",
-        artist: allArtists,
+        artists: allArtists,
         genres: allGenres,
     })
 })
@@ -133,7 +133,7 @@ exports.album_create_post = [
 
             res.render("album_form", {
                 title: "Create Album",
-                artist: allArtists,
+                artists: allArtists,
                 genres: allGenres,
                 album: album,
                 errors: errors.array()
