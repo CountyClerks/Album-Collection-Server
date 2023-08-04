@@ -10,7 +10,7 @@ exports.genre_list = asyncHandler(async (req, res, next) => {
 
     res.render("genre_list", {
       title: "Genre List",
-      genre_list: allGenres
+      genre_list: allGenres,
     })
 })
 

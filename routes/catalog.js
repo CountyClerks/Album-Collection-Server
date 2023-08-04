@@ -53,7 +53,7 @@ router.post('/genre/create', genre_controller.genre_create_post)
 
 //Read genres
 router.get('/genre/:id', genre_controller.genre_detail)
-router.post('/genres', genre_controller.genre_list)
+router.get('/genres', genre_controller.genre_list)
 
 //Update Genre
 router.get('/genre/:id/update', genre_controller.genre_update_get)
